@@ -9,4 +9,9 @@ export default class CarsModel {
     const newCar = await this.carsModel.create(car);
     return newCar;
   }
+
+  public async getAll() {
+    const cars = await this.carsModel.find();
+    return cars;
+  }
 }

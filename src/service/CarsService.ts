@@ -7,4 +7,9 @@ export default class CarsService {
     const newCar = await this.carsModel.create(car);
     return newCar;
   }
+
+  public async getAll() {
+    const cars = await this.carsModel.getAll();
+    return cars;
+  }
 }

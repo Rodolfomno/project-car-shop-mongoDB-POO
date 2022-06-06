@@ -17,4 +17,13 @@ export default class CarsController {
       return next(error);
     }
   };
+
+  public getAll = async (_req: Request, res: Response, next: NextFunction) => {
+    try {
+      const cars = await this.carService.getAll();
+      return res.status(200).json(cars);
+    } catch (error) {
+      return next(error);
+    }
+  };
 }
