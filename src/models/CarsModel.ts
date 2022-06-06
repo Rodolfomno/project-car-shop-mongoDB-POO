@@ -27,4 +27,9 @@ export default class CarsModel {
     );
     return car;
   }
+
+  public async deleteCar(id:string): Promise<ICar | null> {
+    const car = await this.carsModel.findOneAndDelete({ _id: id });
+    return car;
+  }
 }

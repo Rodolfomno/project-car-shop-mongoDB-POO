@@ -2,6 +2,10 @@ import { NextFunction, Request, Response } from 'express';
 import CarsService from '../service/CarsService';
 
 export default class CarsController {
+  readonly hex24 = 'Id must have 24 hexadecimal characters';
+
+  readonly objNotFound = 'Object not found';
+
   constructor(private carService = new CarsService()) {}
 
   public create = async (req: Request, res: Response, next: NextFunction) => {
@@ -31,14 +35,13 @@ export default class CarsController {
 
   public getCarById = async (r: Request, res: Response, next: NextFunction) => {
     const { id } = r.params;    
-    const message = 'Id must have 24 hexadecimal characters';
 
     try {
-      if (id.length !== 24) return res.status(400).json({ error: message });
+      if (id.length !== 24) return res.status(400).json({ error: this.hex24 });
 
       const car = await this.carService.getCarById(id);
 
-      if (!car) return res.status(404).json({ error: 'Object not found' });
+      if (!car) return res.status(404).json({ error: this.objNotFound });
 
       return res.status(200).json(car);
     } catch (error) {
@@ -49,15 +52,29 @@ export default class CarsController {
   public editCar = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      const message = 'Id must have 24 hexadecimal characters';
   
-      if (id.length !== 24) return res.status(400).json({ error: message });
+      if (id.length !== 24) return res.status(400).json({ error: this.hex24 });
 
       const editedCa = await this.carService.editCar(id, req.body);
   
-      if (!editedCa) return res.status(404).json({ error: 'Object not found' });
+      if (!editedCa) return res.status(404).json({ error: this.objNotFound });
 
       return res.status(200).json({ _id: id, ...req.body });
+    } catch (error) {
+      return next(error);
+    }
+  };
+
+  public deleteCar = async (re: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = re.params;
+
+      if (id.length !== 24) return res.status(400).json({ error: this.hex24 });
+    
+      const car = await this.carService.deleteCar(id);
+    
+      if (!car) return res.status(404).json({ error: this.objNotFound });
+      return res.status(204).end();
     } catch (error) {
       return next(error);
     }

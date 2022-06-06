@@ -23,4 +23,9 @@ export default class CarsService {
     const car = await this.carsModel.editCar(id, editedCar);
     return car;
   }
+
+  public async deleteCar(id:string) {
+    const car = await this.carsModel.deleteCar(id);
+    return car;
+  }
 }
