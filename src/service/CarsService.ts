@@ -18,4 +18,9 @@ export default class CarsService {
     if (!car) return false; 
     return car;
   }
+
+  public async editCar(id: string, editedCar: object) {
+    const car = await this.carsModel.editCar(id, editedCar);
+    return car;
+  }
 }

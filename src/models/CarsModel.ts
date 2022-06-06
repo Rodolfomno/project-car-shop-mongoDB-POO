@@ -19,4 +19,12 @@ export default class CarsModel {
     const car = await this.carsModel.findOne({ _id: id });
     return car;
   }
+
+  public async editCar(id: string, editedCar: object) {
+    const car = await this.carsModel.findOneAndUpdate(
+      { _id: id },
+      { ...editedCar },
+    );
+    return car;
+  }
 }
