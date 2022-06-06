@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import CarsService from '../service/CarsService';
+import CarsService from '../services/CarsService';
 
 export default class CarsController {
   readonly hex24 = 'Id must have 24 hexadecimal characters';
@@ -74,7 +74,7 @@ export default class CarsController {
       const car = await this.carService.deleteCar(id);
     
       if (!car) return res.status(404).json({ error: this.objNotFound });
-      return res.status(204).end();
+      return res.status(204).json({ message: 'car deleted' });
     } catch (error) {
       return next(error);
     }

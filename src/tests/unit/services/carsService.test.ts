@@ -3,49 +3,37 @@ import chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import CarModel from '../../../models/CarsModel';
-import CarService from '../../../service/CarsService';
+import CarService from '../../../services/CarsService';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-export const validCar = {
-  _id: '99999999999999',
-  model: 'Uno da Escada',
-  year: 1963,
-  color: 'red',
-  buyValue: 3500,
-  seatsQty: 2,
-  doorsQty: 2
+const validCar = {
+  "_id": '99999999999999',
+  "model": 'Uno da Escada',
+  "year": 1963,
+  "color": 'red',
+  "buyValue": 3500,
+  "seatsQty": 2,
+  "doorsQty": 2
 };
 
-export const invalidCar = {
-  _id: '99999999999999',
-  model: 'Uno da Escada',
-  year: 1963,
-  color: 'red',
-  buyValue: 3500,
-  seatsQty: 0,
-  doorsQty: 2
-};
+const model = new CarModel();
+const service = new CarService(model);
 
+describe('test case for car Service', () => {
 
-describe('test case for car service', () => {
-  const model = new CarModel();
-  const service = new CarService(model);
-
-  describe('case test create car', () => {
+  describe('case test create car Service', () => {
     describe('valid data', () => {
-      before(async () => {
-        Sinon.stub(model, 'create').resolves(validCar as any);
-      });
+      before(async () => Sinon.stub(model, 'create').resolves(validCar as any));
 
       after(() => {
-        Sinon.restore();
+        (model.create as Sinon.SinonStub).restore();
       });
 
       it('return an object', async () => {
-        const result = await service.create(validCar as any);
+        const result = await service.create(validCar);
         expect(result).to.be.an('object');
       });
 
@@ -63,7 +51,7 @@ describe('test case for car service', () => {
       });
 
       after(() => {
-        Sinon.restore();
+        (model.editCar as Sinon.SinonStub).restore();
       });
 
       it('return a object', async () => {

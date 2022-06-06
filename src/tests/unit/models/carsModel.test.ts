@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-export const validCar = {
+const validCar = {
   _id: '999999999',
   model: 'Uno da Escada',
   year: 1963,
