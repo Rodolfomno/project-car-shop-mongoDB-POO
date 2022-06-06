@@ -14,4 +14,9 @@ export default class CarsModel {
     const cars = await this.carsModel.find();
     return cars;
   }
+
+  public async getCarById(id: string) {
+    const car = await this.carsModel.findOne({ _id: id });
+    return car;
+  }
 }

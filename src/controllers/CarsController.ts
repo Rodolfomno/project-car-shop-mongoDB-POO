@@ -26,4 +26,23 @@ export default class CarsController {
       return next(error);
     }
   };
+
+  // r lint ok
+
+  public getCarById = async (r: Request, res: Response, next: NextFunction) => {
+    const { id } = r.params;    
+    const message = 'Id must have 24 hexadecimal characters';
+
+    try {
+      if (id.length !== 24) return res.status(400).json({ error: message });
+
+      const car = await this.carService.getCarById(id);
+
+      if (!car) return res.status(404).json({ error: 'Object not found' });
+
+      return res.status(200).json(car);
+    } catch (error) {
+      return next(error);
+    }
+  };
 }
